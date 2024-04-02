@@ -859,32 +859,96 @@ var after_study_front_buffer = {
 
 /////////////////////////////////////////// after_study_procedure changed to --- study_procedure_after 
 
+//function to shuffle both arrays together for 'after' procedure. word is first presented in black, and then in red or green
+function shuffleArrays(arr1, arr2) {
+    if (arr1.length !== arr2.length) {
+        throw new Error("Arrays must have the same length");
+    }
+
+    var currentIndex = arr1.length, tempValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (currentIndex !== 0) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // Swap it with the current element.
+        tempValue = arr1[currentIndex];
+        arr1[currentIndex] = arr1[randomIndex];
+        arr1[randomIndex] = tempValue;
+
+        // Apply the same swap to the second array
+        tempValue = arr2[currentIndex];
+        arr2[currentIndex] = arr2[randomIndex];
+        arr2[randomIndex] = tempValue;
+    }
+
+    return [arr1, arr2];
+}
+
+var [stimuli_black, stimuli] = shuffleArrays(stimuli_black.slice(), stimuli.slice());
+//console.table(stimuli_black);
+//console.table(stimuli);
+
+
+var stimuli_black_index = 0;
+var stimuli_index = 0;
+var stimuli_black_completed = false;
+var stimuli_completed = false;
+
 var study_procedure_after = {
   timeline: [
     {
       type: 'survey-html-form',
       button_label: 'Press enter to continue',
-      preamble: jsPsych.timelineVariable("stimulus_black"),
+      preamble: function(){
+        var html = `
+          <p style='font-size: 48px;'>${stimuli_black[stimuli_black_index].word}</p>
+          `;
+          stimuli_black_index++;
+        if (stimuli_black_index >= stimuli_black.length) {
+          stimuli_black_index = 0;
+          stimuli_black_completed = true;
+        }
+        return html;
+    },
       html: '<p> <input type="text" onkeydown="return (event.keycode!=13);" id="test-resp-box" name="response" size="10" style=color:white;/></p>', //color being white will not mirror typed word to the screen
       post_trial_gap: 0,
       trial_duration: 1000,
       data: {phase:"study", data: jsPsych.timelineVariable("data")},
       autofocus: 'test-resp-box',
+      timeline_variables: stimuli_black,
     },
 
     {
       type: 'survey-html-form',
       button_label: 'Press enter to continue',
-      preamble: jsPsych.timelineVariable("'word"),
+      preamble: function(){
+        var html = `
+          <p style='font-size: 48px;'>${stimuli[stimuli_index].word}</p>
+          `;
+          stimuli_index++;
+        if (stimuli_index >= stimuli.length) {
+          stimuli_index = 0;
+          stimuli_completed = true;
+        }
+        return html;
+    },
       html: '<p> <input type="text" onkeydown="return (event.keycode!=13);" id="test-resp-box" name="response" size="10" style=color:white;/></p>', //color being white will not mirror typed word to the screen
       post_trial_gap: 500,
       trial_duration: 3000,
       data: {phase:"study", data: jsPsych.timelineVariable("data")},
       autofocus: 'test-resp-box',
+      timeline_variables: stimuli,
     },
   ],
-  timeline_variables: stimuli,
-  randomize_order: true,
+  loop_function: function(){
+    return !(stimuli_black_completed && stimuli_completed);
+  },
+
+  //randomize_order: true,
 };
 /////////////////////////////////////////////////
 
