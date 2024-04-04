@@ -918,7 +918,7 @@ var study_procedure_after = {
     },
       html: '<p> <input type="text" onkeydown="return (event.keycode!=13);" id="test-resp-box" name="response" size="10" style=color:white;/></p>', //color being white will not mirror typed word to the screen
       post_trial_gap: 0,
-      trial_duration: 1000,
+      trial_duration: 100,
       data: {phase:"study", data: jsPsych.timelineVariable("data")},
       autofocus: 'test-resp-box',
       timeline_variables: stimuli_black,
@@ -940,7 +940,7 @@ var study_procedure_after = {
     },
       html: '<p> <input type="text" onkeydown="return (event.keycode!=13);" id="test-resp-box" name="response" size="10" style=color:white;/></p>', //color being white will not mirror typed word to the screen
       post_trial_gap: 500,
-      trial_duration: 3000,
+      trial_duration: 300,
       data: {phase:"study", data: jsPsych.timelineVariable("data")},
       autofocus: 'test-resp-box',
       timeline_variables: stimuli,
@@ -1009,9 +1009,9 @@ var test_phase = {
             timeline_variables: stimuli_test,
             post_trial_gap: 500, // like a blank 500
              on_finish: function(data) {
-              if (data.response == "y" && data.data.type == "old") {
+              if (data.response == "y" && data.type == "old") {
                 data.correct = 1;
-              } else if (data.response == "n" && data.data.type == "new") {
+              } else if (data.response == "n" && data.type == "new") {
                 data.correct = 1;
               }
               else {
