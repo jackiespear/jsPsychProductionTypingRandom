@@ -31,35 +31,6 @@
         <script src="stimuli/endbufferlist_pureproduce_black.js"></script>
         <script src="stimuli/endbufferlist_pureread.js"></script>
         <script src="stimuli/endbufferlist_pureread_black.js"></script>
-        <script src="stimuli/studylist1_mixed.js"></script>
-        <script src="stimuli/studylist1_mixed_black.js"></script>
-        <script src="stimuli/studylist1_pureproduce.js"></script>
-        <script src="stimuli/studylist1_pureproduce_black.js"></script>
-        <script src="stimuli/studylist1_pureread.js"></script>
-        <script src="stimuli/studylist1_pureread_black.js"></script>
-        <script src="stimuli/studylist2_mixed.js"></script>
-        <script src="stimuli/studylist2_mixed_black.js"></script>
-        <script src="stimuli/studylist2_pureproduce.js"></script>
-        <script src="stimuli/studylist2_pureproduce_black.js"></script>
-        <script src="stimuli/studylist2_pureread.js"></script>
-        <script src="stimuli/studylist2_pureread_black.js"></script>
-        <script src="stimuli/studylist3_mixed.js"></script>
-        <script src="stimuli/studylist3_mixed_black.js"></script>
-        <script src="stimuli/studylist3_pureproduce.js"></script>
-        <script src="stimuli/studylist3_pureproduce_black.js"></script>
-        <script src="stimuli/studylist3_pureread.js"></script>
-        <script src="stimuli/studylist3_pureread_black.js"></script>
-        <script src="stimuli/studylist4_mixed.js"></script>
-        <script src="stimuli/studylist4_mixed_black.js"></script>
-        <script src="stimuli/studylist4_pureproduce.js"></script>
-        <script src="stimuli/studylist4_pureproduce_black.js"></script>
-        <script src="stimuli/studylist4_pureread.js"></script>
-        <script src="stimuli/studylist4_pureread_black.js"></script>
-        <script src="stimuli/testlist1.js"></script>
-        <script src="stimuli/testlist2.js"></script>
-        <script src="stimuli/testlist3.js"></script>
-        <script src="stimuli/testlist4.js"></script>
-
         <script src="words.js"></script>
 
         <link href="jspsych-6.3.1/css/jspsych.css" rel="stylesheet" type="text/css"></link>
@@ -78,7 +49,7 @@ studywords=jsPsych.randomization.repeat(studywords, 1); //this will shuffle the 
 
 //subsetting the words into 3 arrays for produce words, read words, and new words
 var produce_words = studywords.slice(0, 20); //produce words
-console.table(produce_words);
+//console.table(produce_words);
 
 var read_words = studywords.slice(20, 40); //read words
 //console.table(read_words);
@@ -263,22 +234,6 @@ var list_1T = test_words_pureproduce;
 var list_2T = test_words_pureread;
 var list_3T = test_words_mixed;
 
-console.table(list_3T);
-console.table(list_2T);
-console.table(list_1T);
-
-console.table(list_3);
-console.table(list_2);
-console.table(list_1);
-
-console.table(stimulus_black_mixed);
-console.table(stimulus_black_pp);
-console.table(stimulus_black_pr);
-
-
-
-
-
 
 
 console.log(experiment_assignment);
@@ -374,7 +329,7 @@ if (condition_assignment == "mixed" && experiment_assignment =="production_effec
 };
 
 
-console.table(stimuli);
+//console.table(stimuli);
 //console.log(stimuli);
 //console.table(stimuli_test);
 
@@ -903,8 +858,8 @@ function shuffleArrays(arr1, arr2) {
 }
 
 var [stimuli_black, stimuli] = shuffleArrays(stimuli_black.slice(), stimuli.slice());
-console.table(stimuli_black);
-console.table(stimuli);
+//console.table(stimuli_black);
+//console.table(stimuli);
 
 
 var stimuli_black_index = 0;
