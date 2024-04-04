@@ -264,6 +264,18 @@ var list_2T = test_words_pureread;
 var list_3T = test_words_mixed;
 
 console.table(list_3T);
+console.table(list_2T);
+console.table(list_1T);
+
+console.table(list_3);
+console.table(list_2);
+console.table(list_1);
+
+console.table(stimulus_black_mixed);
+console.table(stimulus_black_pp);
+console.table(stimulus_black_pr);
+
+
 
 
 
@@ -778,7 +790,7 @@ var study_instructions123 = {
     button_label: 'Press enter to continue',
     preamble: function(){
         var html = `
-          <p style='font-size: 48px;'>${jsPsych.timelineVariable('stimulus')}</p>
+          <p style='font-size: 48px;'>${jsPsych.timelineVariable('word')}</p>
           `
         return html;
     },
@@ -891,8 +903,8 @@ function shuffleArrays(arr1, arr2) {
 }
 
 var [stimuli_black, stimuli] = shuffleArrays(stimuli_black.slice(), stimuli.slice());
-//console.table(stimuli_black);
-//console.table(stimuli);
+console.table(stimuli_black);
+console.table(stimuli);
 
 
 var stimuli_black_index = 0;
@@ -901,6 +913,77 @@ var stimuli_black_completed = false;
 var stimuli_completed = false;
 
 var study_procedure_after = {
+  timeline: [
+    {
+      type: 'survey-html-form',
+      button_label: 'Press enter to continue',
+      preamble: function(){
+        var currentStimuli = stimuli_black[stimuli_black_index];
+        if (!currentStimuli) {
+          return ''; // Return empty string if currentStimuli is undefined
+        }
+        var html = `
+          <p style='font-size: 48px;'>${currentStimuli.word}</p>
+          `;
+        stimuli_black_index++;
+        if (stimuli_black_index >= stimuli_black.length) {
+          stimuli_black_index = 0;
+          stimuli_black_completed = true;
+        }
+        return html;
+      },
+      html: '<p> <input type="text" onkeydown="return (event.keycode!=13);" id="test-resp-box" name="response" size="10" style=color:white;/></p>',
+      post_trial_gap: 0,
+      trial_duration: 100,
+      data: function(){
+        var currentStimuli = stimuli_black[stimuli_black_index - 1];
+        if (!currentStimuli) {
+          return {}; // Return empty object if currentStimuli is undefined
+        }
+        return {phase:"study_black", category: currentStimuli.category, type: currentStimuli.type, word: currentStimuli.word};
+      },
+      autofocus: 'test-resp-box',
+      timeline_variables: stimuli_black,
+    },
+    {
+      type: 'survey-html-form',
+      button_label: 'Press enter to continue',
+      preamble: function(){
+        var currentStimuli = stimuli[stimuli_index];
+        if (!currentStimuli) {
+          return ''; // Return empty string if currentStimuli is undefined
+        }
+        var html = `
+          <p style='font-size: 48px;'>${currentStimuli.word}</p>
+          `;
+        stimuli_index++;
+        if (stimuli_index >= stimuli.length) {
+          stimuli_index = 0;
+          stimuli_completed = true;
+        }
+        return html;
+      },
+      html: '<p> <input type="text" onkeydown="return (event.keycode!=13);" id="test-resp-box" name="response" size="10" style=color:white;/></p>',
+      post_trial_gap: 500,
+      trial_duration: 300,
+      data: function(){
+        var currentStimuli = stimuli[stimuli_index - 1];
+        if (!currentStimuli) {
+          return {}; // Return empty object if currentStimuli is undefined
+        }
+        return {phase:"study", category: currentStimuli.category, type: currentStimuli.type, word: currentStimuli.word};
+      },
+      autofocus: 'test-resp-box',
+      timeline_variables: stimuli,
+    },
+  ],
+  loop_function: function(){
+    return !(stimuli_black_completed && stimuli_completed);
+  },
+};
+
+
+/*var study_procedure_after = {
   timeline: [
     {
       type: 'survey-html-form',
@@ -919,7 +1002,7 @@ var study_procedure_after = {
       html: '<p> <input type="text" onkeydown="return (event.keycode!=13);" id="test-resp-box" name="response" size="10" style=color:white;/></p>', //color being white will not mirror typed word to the screen
       post_trial_gap: 0,
       trial_duration: 100,
-      data: {phase:"study_black", category:jsPsych.timelineVariable("category"), type:jsPsych.timelineVariable("type"), word:jsPsych.timelineVariable("word")},
+      data: {phase:"study_black", category: jsPsych.timelineVariable("category"), type:jsPsych.timelineVariable("type"), word: jsPsych.timelineVariable("word")},
       autofocus: 'test-resp-box',
       timeline_variables: stimuli_black,
     },
@@ -941,7 +1024,7 @@ var study_procedure_after = {
       html: '<p> <input type="text" onkeydown="return (event.keycode!=13);" id="test-resp-box" name="response" size="10" style=color:white;/></p>', //color being white will not mirror typed word to the screen
       post_trial_gap: 500,
       trial_duration: 300,
-      data: {phase:"study", category: jsPsych.timelineVariable("category"), type: jsPsych.timelineVariable("type"), word: jsPsych.timelineVariable("word")},
+      data: {phase:"study", category:jsPsych.timelineVariable("category"), type:jsPsych.timelineVariable("type"), word:jsPsych.timelineVariable("word")},
       autofocus: 'test-resp-box',
       timeline_variables: stimuli,
     },
@@ -951,7 +1034,7 @@ var study_procedure_after = {
   },
 
   //randomize_order: true,
-};
+};*/
 /////////////////////////////////////////////////
 
 //Study Phase - End Buffer Items // for afer procedure  
@@ -964,7 +1047,7 @@ var after_study_end_buffer = {
     html:  '<p> <input type="text" onkeydown="return (event.keycode!=13);" id="test-resp-box" name="response" size="10" style=color:white;/></p>', //color being white will not mirror typed word to the screen
     post_trial_gap: 0, 
     trial_duration: 1000, //change back to 3000
-    data: {phase:"study_buffer", data: jsPsych.timelineVariable("data_black")},
+    data: {phase:"study_buffer", data:jsPsych.timelineVariable("data_black")},
     autofocus: 'test-resp-box',
   },
 
@@ -1157,22 +1240,22 @@ var no_consent = {
 
 /*set up experiment structure*/
 var timeline = [];
-//timeline.push(consent);
-//timeline.push(no_consent);
-//timeline.push(welcome);
-//timeline.push(enter_full_screen);
+timeline.push(consent);
+timeline.push(no_consent);
+timeline.push(welcome);
+timeline.push(enter_full_screen);
 timeline.push(instructions);
 timeline.push(practice_test_instructions_pre);
 
-/*if(during_after_assignment == "during") {
+if(during_after_assignment == "during") {
   timeline.push(practice_study_procedure);
 } else {
   timeline.push(practice_study_procedure_after);
-}; */
+}; 
 
-//timeline.push(practice_test_instructions);
-//timeline.push(practice_test_procedure);
-//timeline.push(practice_test_instructions_post);
+timeline.push(practice_test_instructions);
+timeline.push(practice_test_procedure);
+timeline.push(practice_test_instructions_post);
 
 if(during_after_assignment == "during") {
   timeline.push(study_front_buffer);
@@ -1202,9 +1285,9 @@ timeline.push(debrief);
 jsPsych.init({
     timeline: timeline,
     on_finish: function() {
-     //window.location.href = "https://umanitobapsych.sona-systems.com/webstudy_credit.aspx?experiment_id=1562&credit_token=26a8ab31eea847cdbd7079fef3572e01&survey_code="+SONA_ID; //changed
+     window.location.href = "https://umanitobapsych.sona-systems.com/webstudy_credit.aspx?experiment_id=1562&credit_token=26a8ab31eea847cdbd7079fef3572e01&survey_code="+SONA_ID; //changed
       // display data at end:
-      jsPsych.data.displayData(); //commented out for final version
+      //jsPsych.data.displayData(); //commented out for final version
     }
 });
 
