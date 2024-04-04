@@ -263,6 +263,8 @@ var list_1T = test_words_pureproduce;
 var list_2T = test_words_pureread;
 var list_3T = test_words_mixed;
 
+console.table(list_3T);
+
 
 
 
@@ -1000,7 +1002,7 @@ var test_phase = {
     timeline: [
         {
             type: 'html-keyboard-response',
-            stimulus: jsPsych.timelineVariable('stimulus'),
+            stimulus: jsPsych.timelineVariable('word'),
             choices: ['y', 'n'],
             data: {data: jsPsych.timelineVariable("data"), phase: "test"},
             response_ends_trial:true,
