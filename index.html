@@ -215,12 +215,12 @@ jsPsych.data.addProperties({
   experiment: experiment_assignment
 });
 
-var during_after_assignment = jsPsych.randomization.sampleWithoutReplacement(['after', 'after'], 1)[0];
+var during_after_assignment = jsPsych.randomization.sampleWithoutReplacement(['during', 'during'], 1)[0];
 jsPsych.data.addProperties({
   cue_presentation: during_after_assignment
 });
 
-var condition_assignment = jsPsych.randomization.sampleWithoutReplacement(['pureproduce', 'pureproduce', 'pureproduce'], 1)[0];
+var condition_assignment = jsPsych.randomization.sampleWithoutReplacement(['mixed', 'mixed', 'mixed'], 1)[0];
 jsPsych.data.addProperties({
   condition: condition_assignment
 });
@@ -255,7 +255,7 @@ var study_procedure = []; //cue to produce/read, remember/forget is either durin
 var study_procedure_after = [];
 
 
-if (condition_assignment == "mixed" && experiment_assignment =="production_effect" && during_after_assignment == "after") { //if List1 is sampled from above randomization routine, the stimuli presented will be...
+if (condition_assignment == "mixed" && experiment_assignment =="production_effect" && during_after_assignment == "during") { //if List1 is sampled from above randomization routine, the stimuli presented will be...
   stimuli = list_3;
   stimuli_black = stimulus_black_mixed;
   stimuli_test = list_3T;
@@ -267,7 +267,7 @@ if (condition_assignment == "mixed" && experiment_assignment =="production_effec
   test_instruction_text = test_instruction_text_PE;
   study_procedure = study_procedure_after;
 
-} else if (condition_assignment == "pureproduce" && experiment_assignment =="production_effect" && during_after_assignment == "after") {
+} else if (condition_assignment == "pureproduce" && experiment_assignment =="production_effect" && during_after_assignment == "during") {
   stimuli = list_1;
   stimuli_black = stimulus_black_pp;
   stimuli_test = list_1T;
@@ -278,7 +278,7 @@ if (condition_assignment == "mixed" && experiment_assignment =="production_effec
   post_practice_text2 = post_practice_text2_PE;
   test_instruction_text = test_instruction_text_PE;
   study_procedure = study_procedure_after;
-} else if (condition_assignment == "pureread" && experiment_assignment =="production_effect" && during_after_assignment == "after") {
+} else if (condition_assignment == "pureread" && experiment_assignment =="production_effect" && during_after_assignment == "during") {
   stimuli = list_2;
   stimuli_black = stimulus_black_pr;
   stimuli_test = list_2T;
@@ -293,7 +293,7 @@ if (condition_assignment == "mixed" && experiment_assignment =="production_effec
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////                             Directed Forgetting Randomization                      /////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else if(condition_assignment == "mixed" && experiment_assignment =="directed_forgetting" && during_after_assignment == "after") { 
+} else if(condition_assignment == "mixed" && experiment_assignment =="directed_forgetting" && during_after_assignment == "during") { 
   stimuli = list_3;
   stimuli_black = stimulus_black_mixed;
   stimuli_test = list_3T;
@@ -304,7 +304,7 @@ if (condition_assignment == "mixed" && experiment_assignment =="production_effec
   post_practice_text2 = post_practice_text2_DF;
   test_instruction_text = test_instruction_text_DF;
   study_procedure = study_procedure_after;
-} else if (condition_assignment == "pureproduce" && experiment_assignment =="directed_forgetting" && during_after_assignment == "after") {
+} else if (condition_assignment == "pureproduce" && experiment_assignment =="directed_forgetting" && during_after_assignment == "during") {
   stimuli = list_1;
   stimuli_black = stimulus_black_pp;
   stimuli_test = list_1T;
@@ -315,7 +315,7 @@ if (condition_assignment == "mixed" && experiment_assignment =="production_effec
   post_practice_text2 = post_practice_text2_DF;
   test_instruction_text = test_instruction_text_DF;
   study_procedure = study_procedure_after;
-} else if (condition_assignment == "pureread" && experiment_assignment =="directed_forgetting" && during_after_assignment == "after") {
+} else if (condition_assignment == "pureread" && experiment_assignment =="directed_forgetting" && during_after_assignment == "during") {
   stimuli = list_2;
   stimuli_black = stimulus_black_pr;
   stimuli_test = list_2T;
