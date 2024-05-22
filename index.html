@@ -210,17 +210,17 @@ study_words_pureread = JSON.parse(study_words_pureread);
 
 
 /////////////////////////////
-var experiment_assignment = jsPsych.randomization.sampleWithoutReplacement(['production_effect', 'production_effect'], 1)[0];
+var experiment_assignment = jsPsych.randomization.sampleWithoutReplacement(['directed_forgetting', 'directed_forgetting'], 1)[0];
 jsPsych.data.addProperties({
   experiment: experiment_assignment
 });
 
-var during_after_assignment = jsPsych.randomization.sampleWithoutReplacement(['during', 'during'], 1)[0];
+var during_after_assignment = jsPsych.randomization.sampleWithoutReplacement(['after', 'after'], 1)[0];
 jsPsych.data.addProperties({
   cue_presentation: during_after_assignment
 });
 
-var condition_assignment = jsPsych.randomization.sampleWithoutReplacement(['mixed', 'mixed', 'mixed'], 1)[0];
+var condition_assignment = jsPsych.randomization.sampleWithoutReplacement(['pureproduce', 'pureproduce', 'pureproduce'], 1)[0];
 jsPsych.data.addProperties({
   condition: condition_assignment
 });
